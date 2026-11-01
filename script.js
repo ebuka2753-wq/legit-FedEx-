@@ -23,72 +23,92 @@ const translations = {
   de: {
     title: "Ihr Paket reist um die ganze Welt.",
     register: "Lieferregistrierung",
-    submit: "Lieferinformationen senden"
+    submit: "Informationen senden"
   },
   ar: {
     title: "طردك يسافر حول العالم.",
     register: "تسجيل التوصيل",
-    submit: "إرسال معلومات التوصيل"
+    submit: "إرسال المعلومات"
   }
 };
 
-const language = document.getElementById("lang");
+// Change website language
+function changeLanguage() {
+  const language = document.getElementById("lang").value;
+  const selected = translations[language] || translations.en;
 
-function changeLanguage(code) {
-  const t = translations[code] || translations.en;
+  document.querySelector(".hero h1").textContent = selected.title;
+  document.querySelector(".form-section h2").textContent = selected.register;
 
-  document.querySelector(".hero h1").textContent = t.title;
-  document.querySelector(".form-section h2").textContent = t.register;
-  document.querySelector("form button").textContent = t.submit;
+  const submitButton = document.querySelector("#deliveryForm button");
+  if (submitButton) {
+    submitButton.textContent = selected.submit;
+  }
 
-  document.documentElement.dir =
-    code === "ar" ? "rtl" : "ltr";
+  document.documentElement.lang = language;
+  document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
 }
 
-language.addEventListener("change", function() {
-  changeLanguage(this.value);
-});
+// Connect language selector
+const languageSelector = document.getElementById("lang");
 
-const preferred = (navigator.language || "en").slice(0, 2);
+if (languageSelector) {
+  languageSelector.addEventListener("change", changeLanguage);
+}
 
-language.value = translations[preferred] ? preferred : "en";
-changeLanguage(language.value);
+// Automatically display current year
+const yearElement = document.getElementById("year");
 
-document.getElementById("deliveryForm")
-.addEventListener("submit", function(event) {
-  event.preventDefault();
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
 
-  if (!this.reportValidity()) return;
+// Delivery form submission
+const deliveryForm = document.getElementById("deliveryForm");
 
-  const data = new FormData(this);
+if (deliveryForm) {
+  deliveryForm.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-  const message = `
-NEW DELIVERY REQUEST
+    if (!deliveryForm.checkValidity()) {
+      deliveryForm.reportValidity();
+      return;
+    }
 
-Sender Name: ${data.get("fullName")}
-Email: ${data.get("email")}
-Phone: ${data.get("phone")}
+    const formData = new FormData(deliveryForm);
 
-Sender Country: ${data.get("country")}
-Sender City: ${data.get("city")}
-Postal Code: ${data.get("postal")}
-Sender Address: ${data.get("address")}
+    const details = [
+      "NEW DELIVERY REQUEST",
+      "",
+      "SENDER DETAILS",
+      `Full Name: ${formData.get("fullName") || ""}`,
+      `Email: ${formData.get("email") || ""}`,
+      `Phone: ${formData.get("phone") || ""}`,
+      `Country: ${formData.get("country") || ""}`,
+      `City: ${formData.get("city") || ""}`,
+      `Postal Code: ${formData.get("postal") || ""}`,
+      `Address: ${formData.get("address") || ""}`,
+      "",
+      "RECIPIENT DETAILS",
+      `Recipient Name: ${formData.get("recipient") || ""}`,
+      `Recipient Phone: ${formData.get("recipientPhone") || ""}`,
+      `Destination Country: ${formData.get("destination") || ""}`,
+      `Destination City: ${formData.get("destinationCity") || ""}`,
+      `Destination Address: ${formData.get("destinationAddress") || ""}`,
+      "",
+      `Parcel Description: ${formData.get("parcel") || ""}`,
+      "Displayed Delivery Fee: $600 USD"
+    ];
 
-Receiver Name: ${data.get("recipient")}
-Receiver Phone: ${data.get("recipientPhone")}
+    const message = encodeURIComponent(details.join("\n"));
 
-Destination Country: ${data.get("destination")}
-Destination City: ${data.get("destinationCity")}
-Delivery Address: ${data.get("destinationAddress")}
+    const whatsappNumber = "2349040071415";
+    const whatsappURL =
+      `https://wa.me/${whatsappNumber}?text=${message}`;
 
-Parcel Description: ${data.get("parcel")}
+    window.open(whatsappURL, "_blank");
+  });
+}
 
-Delivery Fee: $600 USD
-`;
-
-  const whatsapp =
-    "https://wa.me/2349040071415?text=" +
-    encodeURIComponent(message);
-
-  window.open(whatsapp, "_blank");
-});
+// Set initial language
+changeLanguage();
