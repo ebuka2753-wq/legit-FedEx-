@@ -5,177 +5,276 @@
   box-sizing: border-box;
 }
 
+:root {
+  --navy: #071b3a;
+  --blue: #0755b8;
+  --light-blue: #eaf3ff;
+  --yellow: #ffcc00;
+  --white: #ffffff;
+  --text: #243247;
+  --muted: #68778b;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f5f5fa;
-  color: #222;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f7fb;
+  color: var(--text);
+  line-height: 1.6;
 }
 
 header {
-  background: white;
-  padding: 20px;
+  background: var(--navy);
+  color: var(--white);
+  padding: 18px 7%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 12px;
 }
 
 .logo {
   font-size: 25px;
-  font-weight: bold;
-  color: #4b168c;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .logo span {
-  color: #ff6600;
+  color: var(--yellow);
 }
 
-.whatsapp {
-  background: #20b866;
-  color: white;
-  padding: 12px 18px;
-  text-decoration: none;
-  border-radius: 8px;
+header select {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--navy);
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .hero {
-  background: linear-gradient(120deg, #31105d, #692bb0);
-  color: white;
-  text-align: center;
-  padding: 90px 20px;
+  min-height: 390px;
+  padding: 80px 7%;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(5, 23, 52, .94), rgba(5, 23, 52, .58)),
+    url("https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=1600&q=85");
+  background-size: cover;
+  background-position: center;
+  color: var(--white);
+}
+
+.hero-content {
+  max-width: 650px;
 }
 
 .hero h1 {
-  font-size: 40px;
-  margin-bottom: 20px;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.15;
+  margin-bottom: 18px;
 }
 
 .hero p {
+  font-size: 17px;
+  color: #e5edfa;
   margin-bottom: 25px;
 }
 
-.btn {
+.hero a {
   display: inline-block;
-  background: #ff6600;
-  color: white;
-  padding: 15px 25px;
+  background: var(--yellow);
+  color: var(--navy);
+  padding: 13px 24px;
+  border-radius: 6px;
   text-decoration: none;
-  border-radius: 8px;
+  font-weight: bold;
 }
 
-.features {
+.hero a:hover {
+  background: #f0bd00;
+}
+
+.info-section {
+  padding: 45px 7%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  padding: 40px 6%;
 }
 
-.card {
-  background: white;
+.info-card {
+  background: var(--white);
   padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 3px 12px #00000010;
-}
-
-.card h2 {
-  margin-bottom: 12px;
-  color: #4b168c;
-}
-
-.price {
-  background: white;
-  margin: 20px auto;
-  padding: 30px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .05);
   text-align: center;
-  max-width: 600px;
-  border-radius: 12px;
 }
 
-.price h1 {
-  color: #4b168c;
-  font-size: 40px;
+.info-card h3 {
+  color: var(--blue);
+  margin-bottom: 10px;
 }
 
 .form-section {
-  background: white;
-  max-width: 750px;
-  margin: 40px auto;
-  padding: 30px;
-  border-radius: 15px;
+  max-width: 900px;
+  margin: 20px auto 60px;
+  padding: 35px;
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .07);
 }
 
 .form-section h2 {
-  text-align: center;
+  color: var(--navy);
+  font-size: 27px;
+  margin-bottom: 8px;
+}
+
+.form-section > p {
+  color: var(--muted);
   margin-bottom: 25px;
-  color: #4b168c;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 form input,
+form select,
 form textarea {
   width: 100%;
-  padding: 14px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 13px;
+  border: 1px solid #d5deea;
+  border-radius: 7px;
+  outline: none;
   font-size: 15px;
+  font-family: inherit;
+  background: #fff;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(7, 85, 184, .1);
 }
 
 form textarea {
   min-height: 90px;
-}
-
-.fee {
-  background: #f1e9fb;
-  padding: 18px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  font-size: 20px;
-}
-
-.fee strong {
-  color: #4b168c;
-}
-
-.consent {
-  display: block;
-  margin-bottom: 18px;
-}
-
-.consent input {
-  width: auto;
+  resize: vertical;
 }
 
 form button {
-  width: 100%;
-  background: #ff6600;
-  color: white;
+  grid-column: 1 / -1;
   border: none;
-  padding: 16px;
-  font-size: 17px;
+  border-radius: 7px;
+  background: var(--blue);
+  color: var(--white);
+  padding: 15px;
+  font-size: 16px;
   font-weight: bold;
-  border-radius: 8px;
   cursor: pointer;
+  transition: background .2s ease;
+}
+
+form button:hover {
+  background: var(--navy);
+}
+
+form input[type="checkbox"] {
+  width: auto;
+}
+
+form label:has(input[type="checkbox"]) {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: flex-start;
+  font-weight: normal;
+}
+
+.fee-box {
+  background: var(--light-blue);
+  border-left: 4px solid var(--blue);
+  padding: 18px;
+  border-radius: 7px;
+  margin: 20px 0;
+}
+
+.fee-box strong {
+  color: var(--blue);
+  font-size: 25px;
 }
 
 footer {
-  background: #241044;
-  color: white;
+  background: var(--navy);
+  color: var(--white);
   text-align: center;
-  padding: 35px;
+  padding: 28px 7%;
+  font-size: 14px;
 }
 
-@media(max-width: 700px) {
-  .features {
-    grid-template-columns: 1fr;
+footer p {
+  margin: 5px 0;
+}
+
+.whatsapp {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #25d366;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 27px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, .2);
+  z-index: 10;
+}
+
+@media (max-width: 700px) {
+  header {
+    padding: 16px 5%;
   }
 
-  .hero h1 {
-    font-size: 30px;
+  .hero {
+    min-height: 340px;
+    padding: 55px 6%;
+  }
+
+  .info-section {
+    grid-template-columns: 1fr;
+    padding: 30px 5%;
   }
 
   .form-section {
-    margin: 20px 12px;
-    padding: 20px;
+    margin: 15px 5% 40px;
+    padding: 22px 17px;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  form button {
+    grid-column: 1;
+  }
+
+  .form-section h2 {
+    font-size: 23px;
   }
 }
